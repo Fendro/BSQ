@@ -29,16 +29,16 @@ function main(string $filepath): void
                 $yOffset = $row + 1;
                 $yMax = $row + $streak;
                 while ($yOffset < $yMax) {
-                    $xOffset = $col - $streak + 1;
-                    $xMax = $xOffset + $streak;
-                    while ($xOffset < $xMax) {
+                    $xOffset = $col;
+                    $xMin = $xOffset - $streak + 1;
+                    while ($xOffset > $xMin) {
                         if ($map[$yOffset][$xOffset] === "o") {
                             $obstacle = true;
                             $col = $xOffset;
                             $streak = 0;
                             break(2);
                         }
-                        $xOffset++;
+                        $xOffset--;
                     }
                     $yOffset++;
                 }
