@@ -6,8 +6,7 @@ function main(string $filepath): void
     $map = explode("\n", $content);
     $rowCount = array_shift($map);
     $rowLength = strlen($map[0]);
-    if (strlen($map[$rowCount]) < $rowLength)
-        array_pop($map);
+    array_pop($map);
     $square = [
         "row" => null,
         "col" => null,
@@ -26,7 +25,7 @@ function main(string $filepath): void
                 $streak = 0;
             }
 
-            if ($streak > $square["size"] && $remainingRows > $streak) {
+            if ($streak > $square["size"] && $remainingRows >= $streak) {
                 $obstacle = false;
                 $yOffset = $row + 1;
                 $yMax = $row + $streak;
