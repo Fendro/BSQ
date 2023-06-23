@@ -20,9 +20,11 @@ function main(string $filepath): void
         $col = 0;
         $streak = 0;
         while ($col < $rowLength && ($rowLength - $col + $streak) > $square["size"]) {
-            ($map[$row][$col] === ".")
-                ? $streak++
-                : $streak = 0;
+            if ($map[$row][$col] === ".") {
+                $streak++;
+            } else {
+                $streak = 0;
+            }
 
             if ($streak > $square["size"] && $remainingRows > $streak) {
                 $obstacle = false;
@@ -30,7 +32,7 @@ function main(string $filepath): void
                 $yMax = $row + $streak;
                 while ($yOffset < $yMax) {
                     $xOffset = $col;
-                    $xMin = $xOffset - $streak + 1;
+                    $xMin = $xOffset - $streak;
                     while ($xOffset > $xMin) {
                         if ($map[$yOffset][$xOffset] === "o") {
                             $obstacle = true;
@@ -43,8 +45,9 @@ function main(string $filepath): void
                     $yOffset++;
                 }
 
-                if (!$obstacle)
+                if (!$obstacle) {
                     $square = ["row" => $row, "col" => $col - $streak + 1, "size" => $streak];
+                }
             }
             $col++;
         }
@@ -52,9 +55,12 @@ function main(string $filepath): void
         $remainingRows = $rowCount - $row;
     }
 
-    for ($row = $square["row"]; $row < $square["row"] + $square["size"]; $row++) {
-        for ($col = $square["col"]; $col < $square["col"] + $square["size"]; $col++) {
-            $map[$row][$col] = "x";
+
+    if ($square["size"]) {
+        for ($row = $square["row"]; $row < $square["row"] + $square["size"]; $row++) {
+            for ($col = $square["col"]; $col < $square["col"] + $square["size"]; $col++) {
+                $map[$row][$col] = "x";
+            }
         }
     }
 
